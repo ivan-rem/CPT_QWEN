@@ -1,0 +1,16 @@
+{"time":"2025-07-29T17:45:05.579049-04:00","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
+{"time":"2025-07-29T17:45:05.9780152-04:00","level":"INFO","msg":"stream: created new stream","id":"d9p2ptqu"}
+{"time":"2025-07-29T17:45:05.9780152-04:00","level":"INFO","msg":"stream: started","id":"d9p2ptqu"}
+{"time":"2025-07-29T17:45:05.9780152-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"d9p2ptqu"}
+{"time":"2025-07-29T17:45:05.9780152-04:00","level":"INFO","msg":"sender: started","stream_id":"d9p2ptqu"}
+{"time":"2025-07-29T17:45:05.9780152-04:00","level":"INFO","msg":"handler: started","stream_id":"d9p2ptqu"}
+{"time":"2025-07-29T18:43:14.5773628-04:00","level":"WARN","msg":"sender: taking a long time","seconds":2722.5835925,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true mailbox_slot:\"0va38v2a653x\" connection_id:\"1(127.0.0.1:52321)\")"}
+{"time":"2025-07-29T18:43:14.5773628-04:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-07-29T18:43:14.5778891-04:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ivanremsha70-finam/qwen-local-test/d9p2ptqu/file_stream\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-07-29T18:43:17.2065482-04:00","level":"INFO","msg":"sender: succeeded after taking longer than expected","seconds":2725.2127779,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true mailbox_slot:\"0va38v2a653x\" connection_id:\"1(127.0.0.1:52321)\")"}
+{"time":"2025-07-29T20:47:41.8314161-04:00","level":"INFO","msg":"stream: closing","id":"d9p2ptqu"}
+{"time":"2025-07-29T20:47:42.2010404-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-29T20:47:42.4191526-04:00","level":"INFO","msg":"sender: closed","stream_id":"d9p2ptqu"}
+{"time":"2025-07-29T20:47:42.4209316-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"d9p2ptqu"}
+{"time":"2025-07-29T20:47:42.4209316-04:00","level":"INFO","msg":"handler: closed","stream_id":"d9p2ptqu"}
+{"time":"2025-07-29T20:47:42.4209316-04:00","level":"INFO","msg":"stream: closed","id":"d9p2ptqu"}

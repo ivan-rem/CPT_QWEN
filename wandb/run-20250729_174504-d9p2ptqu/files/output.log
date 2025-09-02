@@ -1,0 +1,22 @@
+  0%|                                                                                                                 | 0/1000 [00:00<?, ?it/s]`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+  1%|▉                                                                                                     | 9/1000 [12:40<18:14:47, 66.28s/it]Traceback (most recent call last):
+  File "C:\Users\ivanr\OneDrive\Documents\Finam_AI\cpt_qwen\scripts\run_cpt_qwen.py", line 132, in <module>
+    main()
+  File "C:\Users\ivanr\OneDrive\Documents\Finam_AI\cpt_qwen\scripts\run_cpt_qwen.py", line 120, in main
+    trainer.train(resume_from_checkpoint=last_ckpt)
+  File "C:\Users\ivanr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\transformers\trainer.py", line 2241, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ivanr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\transformers\trainer.py", line 2611, in _inner_training_loop
+    self.control = self.callback_handler.on_step_end(args, self.state, self.control)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ivanr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\transformers\trainer_callback.py", line 535, in on_step_end
+    return self.call_event("on_step_end", args, state, control)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ivanr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\transformers\trainer_callback.py", line 557, in call_event
+    result = getattr(callback, event)(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ivanr\OneDrive\Documents\Finam_AI\cpt_qwen\src\utils\wandb_callbacks.py", line 13, in on_step_end
+    wandb.log({"total_tokens_seen": state.global_step * args.per_device_train_batch_size * args.gradient_accumulation_steps * args.world_size * args.max_seq_length})
+                                                                                                                                                ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TrainingArguments' object has no attribute 'max_seq_length'

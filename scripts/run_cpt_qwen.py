@@ -114,7 +114,7 @@ def main():
         train_dataset=train_ds,
         eval_dataset=eval_ds,
         tokenizer=tokenizer,
-        callbacks=[LogTrainTokensCallback()],
+        callbacks=[LogTrainTokensCallback(data_args.max_seq_len)],
     )
 
     trainer.train(resume_from_checkpoint=last_ckpt)

@@ -1,45 +1,77 @@
+
+# ----------------
 # Paths & data
-model_name: "Qwen/Qwen2.5-0.5B"
-output_dir: "out/qwen2.5-0.5b-cpt"
-logging_dir: "out/qwen2.5-0.5b-cpt/logs"
-train_files: "src\\data\\cpt_data.parquet"   # parquet files with a 'text' column
-text_column: "text"
+# ----------------
+model_name: "Qwen/Qwen2.5-3B"
+output_dir: "/mnt/checkpoints/qwen2.5-3b-cpt"
+logging_dir: "/mnt/checkpoints/qwen2.5-3b-cpt/logs"
 
+# Single parquet stream; replace or point to a glob if your loader supports it
+train_files: "/mnt/data/data_fin.parquet"
+# Optional held-out slice (set to null to skip eval)
+validation_files: null
+text_column: "publication_text"
+
+# ----------------
 # Sequence / packing
-max_seq_len: 1024
+# ----------------
+max_seq_len: 4096
 pack_sequences: true
-shuffle_buffer_size: 50_000  # for streaming shuffling
+shuffle_buffer_size: 1_000_000
 
-# Training hyperparams (rough defaults for ~1B tokens)
-per_device_train_batch_size: 1
+# ----------------
+# Trainer hyperparams
+# ----------------
+per_device_train_batch_size: 2         # micro-batch per GPU
 per_device_eval_batch_size: 1
-gradient_accumulation_steps: 32
-learning_rate: 5.0e-5
+gradient_accumulation_steps: 16        # effective tokens/step (@8 GPUs): 2*4096*16*8 = 1,048,576
+learning_rate: 1.0e-4
 warmup_ratio: 0.03
 weight_decay: 0.1
 lr_scheduler_type: "cosine"
-max_steps: 1000
-save_steps: 200
-eval_steps: 200
+max_steps: 3000                         # ~3.1B tokens with the calc above
+save_steps: 250                         # "checkpoint interval" analogous to nanotron
+eval_steps: 500                         # bump if/when you add a validation set
 logging_steps: 10
 max_grad_norm: 1.0
+optim: "adamw_torch_fused"              # fast + stable on Ampere/Hopper
 
+# ----------------
 # Precision & performance
-bf16: false
-fp16: true
+# ----------------
+bf16: true
+fp16: false
 gradient_checkpointing: true
-flash_attention_2: false
+flash_attention_2: true                 # ExtraArguments flag → attn_implementation
 
-# Distributed / deepspeed
-use_deepspeed: false              # set true + provide deepspeed_config if needed
-zero_stage: 2                     # if deepspeed
+# ----------------
+# Distributed / DDP
+# ----------------
+dataloader_num_workers: 4
+dataloader_pin_memory: true
+dataloader_drop_last: true              # avoids last uneven batch in DDP
+ddp_find_unused_parameters: false       # good default for decoder-only LMs
+ddp_backend: "nccl"
 
+# ----------------
+# DeepSpeed 
+# ----------------
+use_deepspeed: true
+zero_stage: 2
+
+# ----------------
 # WandB / logging
+# ----------------
 report_to: ["wandb"]
-wandb_project: "qwen-local-test"
-wandb_run_name: "qwen2.5-0.5b-local-test"
+wandb_project: "qwen-cpt"
+wandb_run_name: "qwen2.5-3b-cpt-8x"
 
+# ----------------
 # Misc
-save_total_limit: 3
-seed: 42
-resume_from_checkpoint: true
+# ----------------
+save_total_limit: 6                     # keep a few
+seed: 36
+resume_from_checkpoint: true            # robust long run
+remove_unused_columns: false            # set in code too; safe for CausalLM
+save_safetensors: true
+tf32: true
